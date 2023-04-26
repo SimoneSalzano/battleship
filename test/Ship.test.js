@@ -23,6 +23,7 @@ test("Ship hits don't increase above its length", () => {
 
 test("Ship length must be a number", () => {
 	expect(() => Ship("hello")).toThrow(TypeError);
+	expect(() => Ship()).toThrow(TypeError);
 });
 
 test("Ship length can't be non-positive", () => {
