@@ -66,4 +66,22 @@ describe("Attacks", () => {
 			"You can't attack the same coordinates twice!"
 		);
 	});
+	test("Attacks are properly registered", () => {
+		gb.placeShip(2, [0, 0], true);
+		gb.recieveAttack(2, 2);
+		expect(gb.shots[0][0]).toBe(false);
+		expect(gb.shots[2][2]).toBe(true);
+		gb.recieveAttack(0, 0);
+		expect(gb.shots[0][0]).toBe(true);
+	});
+});
+
+test("Get notified when all ships get sunk", () => {
+	gb.placeShip(1, [0, 0]);
+	gb.placeShip(1, [2, 2]);
+	expect(gb.isAllSunk()).toBe(false);
+	gb.recieveAttack(0, 0);
+	expect(gb.isAllSunk()).toBe(false);
+	gb.recieveAttack(2, 2);
+	expect(gb.isAllSunk()).toBe(true);
 });

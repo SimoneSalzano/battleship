@@ -3,9 +3,11 @@ import Ship from "./Ship";
 const Gameboard = (size) => {
 	const shots = Array(size);
 	const shipPos = Array(size);
+	let shipsPlaced = 0;
+	let shipsSunk = 0;
 	for (let i = 0; i < size; i += 1) {
-		shots[i] = Array(size);
-		shipPos[i] = Array(size);
+		shots[i] = Array(size).fill(false);
+		shipPos[i] = Array(size).fill(false);
 	}
 
 	const isValidCoordinate = (c) => c >= 0 && c < size;
@@ -39,6 +41,7 @@ const Gameboard = (size) => {
 					throw new Error(`Another ship is already placed at (${x},${y})`);
 			for (let i = 0; i < ofLength; i += 1) shipPos[y + i][x] = ship;
 		}
+		shipsPlaced += 1;
 	};
 
 	const recieveAttack = (x, y) => {
@@ -50,9 +53,12 @@ const Gameboard = (size) => {
 		const ship = shipPos[y][x];
 		if (!shipPos[y][x]) return "miss";
 		ship.hit();
-		if (ship.isSunk()) return "sunk";
-		return "hit";
+		if (!ship.isSunk()) return "hit";
+		shipsSunk += 1;
+		return "sunk";
 	};
+
+	const isAllSunk = () => shipsPlaced === shipsSunk;
 
 	return {
 		get shipPos() {
@@ -63,6 +69,7 @@ const Gameboard = (size) => {
 		},
 		placeShip,
 		recieveAttack,
+		isAllSunk,
 	};
 };
 
