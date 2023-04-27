@@ -1,0 +1,37 @@
+$background-color: #1f2141;
+$hover-color: #1c1e36;
+
+html {
+  box-sizing: border-box;
+  background-color: $background-color;
+  color: white;
+  body {
+    display: grid;
+    grid-template-rows: 5vh 90vh 5vh;
+    header {
+      text-align: center;
+    }
+    #boards {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: min(10vw, 50px);
+      .board {
+        display: grid;
+        width: min(450px, 50%);
+        height: 80%;
+        grid-template: repeat(9, 1fr) / repeat(9, 1fr);
+        border: 2px solid white;
+      }
+      .cell {
+        border: 2px solid white;
+        &:hover {
+          background-color: $hover-color;
+        }
+      }
+    }
+    footer {
+      text-align: center;
+    }
+  }
+}
