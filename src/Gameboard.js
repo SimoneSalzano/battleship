@@ -8,14 +8,16 @@ const Gameboard = (size) => {
 		shipPos[i] = Array(size);
 	}
 
+	const isValidCoordinate = (c) => c >= 0 && c < size;
+
 	const placeShip = (ofLength, startPos, horizontally = false) => {
 		const [y, x] = startPos;
-		if (x < 0 || x >= size || y < 0 || y >= size)
+		if (!isValidCoordinate(x) || !isValidCoordinate(y))
 			throw new RangeError(
 				`Position ${startPos} is out of bound for a board of size ${size}.`
 			);
 		if (horizontally) {
-			if (x + ofLength > size) {
+			if (!isValidCoordinate(x + ofLength - 1)) {
 				throw new RangeError(
 					`Ship of length ${ofLength} can't be horizontally positioned at (${x},${y})`
 				);
@@ -26,7 +28,7 @@ const Gameboard = (size) => {
 					throw new Error(`Another ship is already placed at (${x},${y})`);
 			for (let i = 0; i < ofLength; i += 1) shipPos[y][x + i] = ship;
 		} else {
-			if (y + ofLength > size) {
+			if (!isValidCoordinate(y + ofLength - 1)) {
 				throw new RangeError(
 					`Ship of length ${ofLength} can't be vertically positioned at (${x},${y})`
 				);
@@ -39,6 +41,19 @@ const Gameboard = (size) => {
 		}
 	};
 
+	const recieveAttack = (x, y) => {
+		if (!isValidCoordinate(x) || !isValidCoordinate(y))
+			throw new RangeError("Can't attack out of the board!");
+		if (shots[y][x])
+			throw new EvalError("You can't attack the same coordinates twice!");
+		shots[y][x] = true;
+		const ship = shipPos[y][x];
+		if (!shipPos[y][x]) return "miss";
+		ship.hit();
+		if (ship.isSunk()) return "sunk";
+		return "hit";
+	};
+
 	return {
 		get shipPos() {
 			return shipPos;
@@ -47,6 +62,7 @@ const Gameboard = (size) => {
 			return shots;
 		},
 		placeShip,
+		recieveAttack,
 	};
 };
 
