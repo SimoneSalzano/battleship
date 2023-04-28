@@ -11,6 +11,18 @@ const Gameboard = (size) => {
 	}
 
 	const isValidCoordinate = (c) => c >= 0 && c < size;
+	const canPlace = (x, y, length, horizontally) => {
+		if (!isValidCoordinate(x) || !isValidCoordinate(y)) return false;
+		if (horizontally && !isValidCoordinate(x + length - 1)) return false;
+		if (!horizontally && !isValidCoordinate(y + length - 1)) return false;
+		if (horizontally)
+			for (let i = 0; i < length; i += 1) {
+				if (shipPos[y][x + i]) return false;
+			}
+		else
+			for (let i = 0; i < length; i += 1) if (shipPos[y + i][x]) return false;
+		return true;
+	};
 
 	const placeShip = (ofLength, startPos, horizontally = false) => {
 		const [y, x] = startPos;
@@ -58,6 +70,36 @@ const Gameboard = (size) => {
 		return "sunk";
 	};
 
+	const getValidPlacements = (forLength, orientation) => {
+		const placements = [];
+		const xBound = size - (orientation ? forLength : 0);
+		const yBound = size - (orientation ? 0 : forLength);
+		for (let i = 0; i < yBound; i += 1)
+			for (let j = 0; j < xBound; j += 1)
+				if (canPlace(j, i, forLength, orientation)) placements.push([i, j]);
+		return placements;
+	};
+
+	const placeRandomly = (lengths) => {
+		if (!Array.isArray(lengths))
+			throw new TypeError(
+				"You must pass an array of lengths to place ships randomly!"
+			);
+		for (let i = 0; i < lengths.length; i += 1) {
+			if (!(typeof lengths[i] === "number") || lengths[i] <= 0)
+				throw new TypeError(
+					"An array of lengths must contain only positive numbers!"
+				);
+			const l = lengths[i];
+			const orient = Math.floor(Math.random() * 2);
+			const placements = getValidPlacements(l, orient);
+			if (placements.length === 0)
+				throw new Error(`There's no space for ${lengths.length} ships!`);
+			const place = placements[Math.floor(Math.random() * placements.length)];
+			placeShip(l, place, orient);
+		}
+	};
+
 	const isAllSunk = () => shipsPlaced === shipsSunk;
 
 	return {
@@ -70,6 +112,8 @@ const Gameboard = (size) => {
 		placeShip,
 		recieveAttack,
 		isAllSunk,
+		placeRandomly,
+		canPlace,
 	};
 };
 

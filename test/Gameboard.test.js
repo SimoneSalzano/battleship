@@ -40,6 +40,45 @@ describe("Ship placement", () => {
 			"Another ship is already placed at (0,2)"
 		);
 	});
+
+	test("Placeability is well tracked", () => {
+		expect(gb.canPlace(3, 3, 3, true)).toBe(true);
+		expect(gb.canPlace(6, 3, 3, true)).toBe(false);
+		expect(gb.canPlace(3, 6, 3, true)).toBe(true);
+		gb.placeShip(3, [6, 3], true);
+		expect(gb.canPlace(4, 6, 3, true)).toBe(false);
+		expect(gb.canPlace(5, 3, 3, true)).toBe(true);
+		expect(gb.canPlace(5, 9, 3, false)).toBe(false);
+	});
+});
+
+describe("Random Placements", () => {
+	test("Random ship placement doesn't occur when not passing an array of lengths", () => {
+		expect(() => gb.placeRandomly("Hello!")).toThrow(
+			"You must pass an array of lengths to place ships randomly!"
+		);
+	});
+
+	test("Random ship placement doesn't occur when the array passed contains something that is not a length", () => {
+		expect(() => gb.placeRandomly([5, "Hello!", 3])).toThrow(
+			"An array of lengths must contain only positive numbers!"
+		);
+		expect(() => gb.placeRandomly([5, 0, 3])).toThrow(
+			"An array of lengths must contain only positive numbers!"
+		);
+		expect(() => gb.placeRandomly([5, 3, -3])).toThrow(
+			"An array of lengths must contain only positive numbers!"
+		);
+	});
+
+	test("Random placement succeeds", () => {
+		expect(() => gb.placeRandomly([5, 3, 2, 5, 1])).not.toThrow(Error);
+	});
+
+	test("Random placement won't happen in a too small board", () => {
+		const smallBoard = Gameboard(2);
+		expect(() => smallBoard.placeRandomly([1, 1, 1, 1, 1, 1])).toThrow(Error);
+	});
 });
 
 describe("Attacks", () => {
