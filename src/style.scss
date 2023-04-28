@@ -2,36 +2,60 @@ $background-color: #1f2141;
 $hover-color: #1c1e36;
 
 html {
-  box-sizing: border-box;
-  background-color: $background-color;
-  color: white;
-  body {
-    display: grid;
-    grid-template-rows: 5vh 90vh 5vh;
-    header {
-      text-align: center;
-    }
-    #boards {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: min(10vw, 50px);
-      .board {
-        display: grid;
-        width: min(450px, 50%);
-        height: 80%;
-        grid-template: repeat(9, 1fr) / repeat(9, 1fr);
-        border: 2px solid white;
-      }
-      .cell {
-        border: 2px solid white;
-        &:hover {
-          background-color: $hover-color;
-        }
-      }
-    }
-    footer {
-      text-align: center;
-    }
-  }
+	box-sizing: border-box;
+	background-color: $background-color;
+	color: white;
+	body {
+		display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 95vh;
+		width: 100vw;
+    padding: 2vh 0;
+		header {
+			text-align: center;
+      margin: min(10px,2vh);
+			h1 {
+				margin: 0;
+			}
+		}
+		#boards {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: clamp(20px, 8vw, 100px);
+			$board-width: min(min(450px, 65vw),65vh);
+			$board-height: $board-width;
+			.board {
+				display: grid;
+				width: $board-width;
+				grid-template: repeat(9, calc($board-height / 9)) / repeat(
+						9,
+						calc($board-height / 9)
+					);
+				border: 2px solid white;
+			}
+			.cell {
+				border: 2px solid white;
+				&:hover {
+					background-color: $hover-color;
+					cursor: pointer;
+				}
+			}
+		}
+		@media (max-width: 950px) {
+			#boards {
+				flex-direction: column;
+				gap: 50px;
+        height: 100%;
+        overflow-y: auto;
+			}
+		}
+		footer {
+			text-align: center;
+			a {
+				color: white;
+			}
+		}
+	}
 }
