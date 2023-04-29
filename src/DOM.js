@@ -7,7 +7,7 @@ const DOM = (() => {
 		cell.classList.add("cell");
 		cell.dataset.x = x;
 		cell.dataset.y = y;
-		if (ofBoard.shipPos[y][x]) cell.classList.add("ship");
+		if (ofBoard.shipPos[y][x]) cell.classList.add(`ship`);
 		return cell;
 	};
 

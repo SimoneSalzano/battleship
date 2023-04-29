@@ -1,11 +1,16 @@
 $background-color: #1f2141;
-$hover-color: #1c1e36;
 $ship-color: #414247;
+$board-color: #5bddf2;
+$board-hover-color: #4bbecf;
+$board-border-color: #222222;
 
 html {
 	box-sizing: border-box;
 	background-color: $background-color;
-	color: white;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-image: url("../img/table.jpg");
+	color: moccasin;
 	body {
 		display: flex;
 		flex-direction: column;
@@ -15,10 +20,7 @@ html {
 		padding: 2vh 4vw;
 		header {
 			text-align: center;
-			margin: min(10px, 2vh);
-			h1 {
-				margin: 0;
-			}
+			margin: min(10px, 2vh)
 		}
 		#boards {
 			display: flex;
@@ -34,13 +36,14 @@ html {
 						9,
 						calc($board-height / 9)
 					);
-				border: 2px solid white;
+				border: 2px solid $board-border-color;
+				background-color: $board-color;
 			}
 			.cell {
-				border: 2px solid white;
+				border: 2px solid $board-border-color;
 				cursor: pointer;
 				&:hover:not(.ship) {
-					background-color: $hover-color;
+					background-color: $board-hover-color;
 				}
 				&.ship {
 					background-color: $ship-color;
@@ -69,7 +72,7 @@ html {
 			text-align: center;
 			margin-top: 20px;
 			a {
-				color: white;
+				color: moccasin;
 			}
 		}
 	}
