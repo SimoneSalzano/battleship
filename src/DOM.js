@@ -7,7 +7,11 @@ const DOM = (() => {
 		cell.classList.add("cell");
 		cell.dataset.x = x;
 		cell.dataset.y = y;
-		if (ofBoard.shipPos[y][x]) cell.classList.add(`ship`);
+		const ship = ofBoard.shipPos[y][x];
+		if (ship) {
+			cell.classList.add(`ship${(ship.id % 5) + 1}`);
+			cell.classList.add(`ship`);
+		}
 		return cell;
 	};
 

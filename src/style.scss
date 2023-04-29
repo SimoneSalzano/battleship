@@ -1,8 +1,12 @@
 $background-color: #1f2141;
-$ship-color: #414247;
 $board-color: #5bddf2;
 $board-hover-color: #4bbecf;
 $board-border-color: #222222;
+$ship1-color: #db92a5;
+$ship2-color: #8d82cf;
+$ship3-color: #18e756;
+$ship4-color: #f0d2cc;
+$ship5-color: #93a879;
 
 html {
 	box-sizing: border-box;
@@ -20,7 +24,7 @@ html {
 		padding: 2vh 4vw;
 		header {
 			text-align: center;
-			margin: min(10px, 2vh)
+			margin: min(10px, 2vh);
 		}
 		#boards {
 			display: flex;
@@ -45,8 +49,20 @@ html {
 				&:hover:not(.ship) {
 					background-color: $board-hover-color;
 				}
-				&.ship {
-					background-color: $ship-color;
+				&.ship1 {
+					background-color: $ship1-color;
+				}
+				&.ship2 {
+					background-color: $ship2-color;
+				}
+				&.ship3 {
+					background-color: $ship3-color;
+				}
+				&.ship4 {
+					background-color: $ship4-color;
+				}
+				&.ship5 {
+					background-color: $ship5-color;
 				}
 				.hit {
 					background-color: red;
