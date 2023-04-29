@@ -1,5 +1,6 @@
 $background-color: #1f2141;
 $hover-color: #1c1e36;
+$ship-color: #414247;
 
 html {
 	box-sizing: border-box;
@@ -7,14 +8,14 @@ html {
 	color: white;
 	body {
 		display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 95vh;
-		width: 100vw;
-    padding: 2vh 0;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: 94vh;
+		width: 90vw;
+		padding: 2vh 4vw;
 		header {
 			text-align: center;
-      margin: min(10px,2vh);
+			margin: min(10px, 2vh);
 			h1 {
 				margin: 0;
 			}
@@ -24,7 +25,7 @@ html {
 			align-items: center;
 			justify-content: center;
 			gap: clamp(20px, 8vw, 100px);
-			$board-width: min(min(450px, 65vw),65vh);
+			$board-width: min(min(450px, 65vw), 65vh);
 			$board-height: $board-width;
 			.board {
 				display: grid;
@@ -37,9 +38,22 @@ html {
 			}
 			.cell {
 				border: 2px solid white;
-				&:hover {
+				cursor: pointer;
+				&:hover:not(.ship) {
 					background-color: $hover-color;
-					cursor: pointer;
+				}
+				&.ship {
+					background-color: $ship-color;
+				}
+				.hit {
+					background-color: red;
+					border-radius: 50%;
+					width: 50%;
+				}
+				.miss {
+					background-color: white;
+					border-radius: 50%;
+					width: 50%;
 				}
 			}
 		}
@@ -47,12 +61,13 @@ html {
 			#boards {
 				flex-direction: column;
 				gap: 50px;
-        height: 100%;
-        overflow-y: auto;
+				height: 100%;
+				overflow-y: auto;
 			}
 		}
 		footer {
 			text-align: center;
+			margin-top: 20px;
 			a {
 				color: white;
 			}
