@@ -3,7 +3,11 @@ import "./style.scss";
 const DOM = (p1, p2) => {
 	const board1 = document.getElementById("board-1");
 	const board2 = document.getElementById("board-2");
+	const endgameModal = document.getElementById("endgame");
+	const resetBtn = document.getElementById("reset");
 	let attackFollowUp = () => {};
+	let attackAction = () => {};
+	let reset = () => {};
 
 	const visualizeShip = (board, x, y) => {
 		let otherX = Number(x);
@@ -68,7 +72,7 @@ const DOM = (p1, p2) => {
 	const handleClick = (target, board) => {
 		if (board === board2) {
 			const { x, y } = target.dataset;
-			const result = p1.attack(x, y);
+			const result = attackAction(x, y);
 			visualizeShot(p1, result, x, y);
 			if (result) attackFollowUp();
 		}
@@ -102,12 +106,37 @@ const DOM = (p1, p2) => {
 		}
 	};
 
+	const clean = () => {
+		board1.innerHTML = "";
+		board2.innerHTML = "";
+		resetBtn.classList.remove("visible");
+	};
+
+	const displayEndMessage = (msg) => {
+		document.getElementById("endmsg").textContent = msg;
+		endgameModal.style.display = "block";
+	};
+
+	resetBtn.onclick = () => {
+		endgameModal.style.display = "none";
+		clean();
+		reset();
+	};
+
 	return {
 		initializeBoards,
 		set attackFollowUp(cb) {
 			attackFollowUp = cb;
 		},
+		set attackAction(cb) {
+			attackAction = cb;
+		},
 		visualizeShot,
+		clean,
+		displayEndMessage,
+		set reset(cb) {
+			reset = cb;
+		},
 	};
 };
 
