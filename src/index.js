@@ -23,7 +23,7 @@ const initialize = (boardSize, name1, name2, againstAI = true) => {
 			if (p1.ownGameboard.isAllSunk())
 				UI.displayEndMessage("Oh no! You lost all your ships!");
 		} else {
-			UI.displayEndMessage("Yay! Looks like you won!");
+			UI.displayEndMessage("Yay! You won!");
 		}
 	};
 	UI.initializeBoards(boardSize);

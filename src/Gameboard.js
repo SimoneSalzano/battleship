@@ -24,6 +24,8 @@ const Gameboard = (size) => {
 		return true;
 	};
 
+	const canAttack = (x, y) =>
+		isValidCoordinate(x) && isValidCoordinate(y) && !shots[y][x];
 	const placeShip = (ofLength, startPos, horizontally = false) => {
 		const [y, x] = startPos;
 		if (!isValidCoordinate(x) || !isValidCoordinate(y))
@@ -114,6 +116,7 @@ const Gameboard = (size) => {
 		isAllSunk,
 		placeRandomly,
 		canPlace,
+		canAttack,
 	};
 };
 
