@@ -1,22 +1,25 @@
 const DOM = (p1, p2) => {
 	const board1 = document.getElementById("board-1");
 	const board2 = document.getElementById("board-2");
+	let attackFollowUp = () => {};
 
-	const visualizeShot = (player, board, x, y) => {
+	const visualizeShot = (player, result, x, y) => {
+		const board = player === p1 ? board2 : board1;
 		const target = board.querySelector(`[data-x="${x}"][data-y="${y}"]`);
-		const result = p1.attack(x, y);
 		const pin = document.createElement("div");
 		if (result) {
 			if (result === "hit" || result === "sunk") pin.classList.add("hit");
 			else pin.classList.add("miss");
+			target.appendChild(pin);
 		}
-		target.appendChild(pin);
 	};
 
 	const handleClick = (target, board) => {
 		if (board === board2) {
 			const { x, y } = target.dataset;
-			visualizeShot(p1, board, x, y);
+			const result = p1.attack(x, y);
+			visualizeShot(p1, result, x, y);
+			if (result) attackFollowUp();
 		}
 	};
 
@@ -48,7 +51,13 @@ const DOM = (p1, p2) => {
 		}
 	};
 
-	return { initializeBoards };
+	return {
+		initializeBoards,
+		set attackFollowUp(cb) {
+			attackFollowUp = cb;
+		},
+		visualizeShot,
+	};
 };
 
 export default DOM;

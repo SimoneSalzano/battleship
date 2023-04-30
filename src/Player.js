@@ -16,11 +16,12 @@ const Player = (name, ownGameboard, enemyGameboard, isComputer = false) => {
 	};
 
 	const makeMove = () => {
-		if (!isComputer) return;
+		if (!isComputer) return false;
 		const legalMoves = getLegalMoves();
 		const attackCoords =
 			legalMoves[Math.floor(Math.random() * legalMoves.length)];
-		attack(attackCoords[1], attackCoords[0]);
+		const result = attack(attackCoords[1], attackCoords[0]);
+		return { x: attackCoords[1], y: attackCoords[0], result };
 	};
 
 	return {

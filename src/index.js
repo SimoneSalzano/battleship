@@ -12,6 +12,13 @@ const initialize = (boardSize, name1, name2, againstAI = true) => {
 	const p1 = Player(name1, g1, g2, false);
 	const p2 = Player(name2, g2, g1, againstAI);
 	const UI = DOM(p1, p2);
+	UI.attackFollowUp = () => {
+		if (!p2.ownGameboard.isAllSunk()) {
+			const { x, y, result } = p2.makeMove();
+			UI.visualizeShot(p2, result, x, y);
+			console.log("called");
+		}
+	};
 	UI.initializeBoards(boardSize);
 	return { p1, p2, UI };
 };
