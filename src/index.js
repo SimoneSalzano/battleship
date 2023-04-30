@@ -1,4 +1,3 @@
-import "./style.scss";
 import Gameboard from "./Gameboard";
 import Player from "./Player";
 import DOM from "./DOM";
@@ -16,7 +15,6 @@ const initialize = (boardSize, name1, name2, againstAI = true) => {
 		if (!p2.ownGameboard.isAllSunk()) {
 			const { x, y, result } = p2.makeMove();
 			UI.visualizeShot(p2, result, x, y);
-			console.log("called");
 		}
 	};
 	UI.initializeBoards(boardSize);

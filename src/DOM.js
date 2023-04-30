@@ -1,7 +1,56 @@
+import "./style.scss";
+
 const DOM = (p1, p2) => {
 	const board1 = document.getElementById("board-1");
 	const board2 = document.getElementById("board-2");
 	let attackFollowUp = () => {};
+
+	const visualizeShip = (board, x, y) => {
+		let otherX = Number(x);
+		let otherY = Number(y);
+		const sunkShip = board.shipPos[y][x];
+		while (
+			otherX < board.shipPos.length &&
+			board.shipPos[y][otherX] === sunkShip
+		) {
+			const shipCell = board2.querySelector(
+				`[data-x="${otherX}"][data-y="${y}"]`
+			);
+			shipCell.classList.add(`ship`);
+			shipCell.classList.add(`ship${1 + (sunkShip.id % 5)}`);
+			otherX += 1;
+		}
+		otherX = Number(x) - 1;
+		while (otherX >= 0 && board.shipPos[y][otherX] === sunkShip) {
+			const shipCell = board2.querySelector(
+				`[data-x="${otherX}"][data-y="${y}"]`
+			);
+			shipCell.classList.add(`ship`);
+			shipCell.classList.add(`ship${1 + (sunkShip.id % 5)}`);
+			otherX -= 1;
+		}
+		otherY = Number(y) + 1;
+		while (
+			otherY < board.shipPos.length - 1 &&
+			board.shipPos[otherY][x] === sunkShip
+		) {
+			const shipCell = board2.querySelector(
+				`[data-x="${x}"][data-y="${otherY}"]`
+			);
+			shipCell.classList.add(`ship`);
+			shipCell.classList.add(`ship${1 + (sunkShip.id % 5)}`);
+			otherY += 1;
+		}
+		otherY = Number(y) - 1;
+		while (otherY >= 0 && board.shipPos[otherY][x] === sunkShip) {
+			const shipCell = board2.querySelector(
+				`[data-x="${x}"][data-y="${otherY}"]`
+			);
+			shipCell.classList.add(`ship`);
+			shipCell.classList.add(`ship${1 + (sunkShip.id % 5)}`);
+			otherY -= 1;
+		}
+	};
 
 	const visualizeShot = (player, result, x, y) => {
 		const board = player === p1 ? board2 : board1;
@@ -10,6 +59,8 @@ const DOM = (p1, p2) => {
 		if (result) {
 			if (result === "hit" || result === "sunk") pin.classList.add("hit");
 			else pin.classList.add("miss");
+			if (player === p1 && result === "sunk")
+				visualizeShip(p1.enemyGameboard, x, y);
 			target.appendChild(pin);
 		}
 	};
@@ -45,8 +96,8 @@ const DOM = (p1, p2) => {
 	const initializeBoards = (ofSize) => {
 		for (let i = 0; i < ofSize; i += 1) {
 			for (let j = 0; j < ofSize; j += 1) {
-				board1.appendChild(createCell(p1.ownGameboard, i, j));
-				board2.appendChild(createCell(p2.ownGameboard, i, j));
+				board1.appendChild(createCell(p1.ownGameboard, j, i));
+				board2.appendChild(createCell(p2.ownGameboard, j, i));
 			}
 		}
 	};
