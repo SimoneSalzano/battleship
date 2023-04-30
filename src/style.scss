@@ -1,6 +1,6 @@
 $background-color: #1f2141;
-$board-color: #5bddf2;
-$board-hover-color: #4bbecf;
+$board-color: #51bece;
+$board-hover-color: #3ca6b6;
 $board-border-color: #222222;
 $ship1-color: #db92a5;
 $ship2-color: #8d82cf;
@@ -31,7 +31,7 @@ html {
 			align-items: center;
 			justify-content: center;
 			gap: clamp(20px, 8vw, 100px);
-			$board-width: min(min(450px, 65vw), 65vh);
+			$board-width: min(min(600px, 65vw), 65vh);
 			$board-height: $board-width;
 			.board {
 				display: grid;
@@ -46,6 +46,9 @@ html {
 			.cell {
 				border: 2px solid $board-border-color;
 				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				&:hover:not(.ship) {
 					background-color: $board-hover-color;
 				}
@@ -68,11 +71,13 @@ html {
 					background-color: red;
 					border-radius: 50%;
 					width: 50%;
+					height: 50%;
 				}
 				.miss {
 					background-color: white;
 					border-radius: 50%;
 					width: 50%;
+					height: 50%;
 				}
 			}
 		}

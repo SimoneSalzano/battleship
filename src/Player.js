@@ -1,9 +1,9 @@
 const Player = (name, ownGameboard, enemyGameboard, isComputer = false) => {
 	let turns = 0;
 	const attack = (x, y) => {
-		if (enemyGameboard.shots[y][x]) return;
-		enemyGameboard.recieveAttack(x, y);
+		if (enemyGameboard.shots[y][x]) return false;
 		turns += 1;
+		return enemyGameboard.recieveAttack(x, y);
 	};
 
 	const getLegalMoves = () => {

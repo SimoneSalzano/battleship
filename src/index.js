@@ -11,8 +11,9 @@ const initialize = (boardSize, name1, name2, againstAI = true) => {
 	g2.placeRandomly(shipLengths);
 	const p1 = Player(name1, g1, g2, false);
 	const p2 = Player(name2, g2, g1, againstAI);
-	DOM.initializeBoards(boardSize, g1, g2);
-	return { p1, p2 };
+	const UI = DOM(p1, p2);
+	UI.initializeBoards(boardSize);
+	return { p1, p2, UI };
 };
 
 initialize(9, "John", "AI");
