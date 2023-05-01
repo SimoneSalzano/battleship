@@ -29,6 +29,10 @@ html {
 			text-align: center;
 			margin: min(10px, 2vh);
 		}
+		#tips {
+			text-align: center;
+			font-size: large;
+		}
 		#boards {
 			display: flex;
 			align-items: center;
@@ -45,6 +49,19 @@ html {
 					);
 				border: 1px solid $board-border-color;
 				background-color: $board-color;
+			&#board-2 {
+				&.invalid {
+					.cell{
+						cursor: not-allowed;
+					}
+				}
+				.cell {
+					cursor: pointer;
+					&:hover:not(.ship) {
+						background-color: $board-hover-color;
+					}
+				}
+			}
 			}
 			.cell {
 				border: 2px solid $board-border-color;
@@ -52,9 +69,6 @@ html {
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				&:hover:not(.ship) {
-					background-color: $board-hover-color;
-				}
 				&.ship1 {
 					background-color: $ship1-color;
 				}
@@ -105,15 +119,20 @@ html {
 	}
 }
 
-#reset {
+button {
 	border: 1px solid $board-border-color;
 	border-radius: 10px;
 	font-size: large;
 	cursor: pointer;
+	align-self: center;
 	padding: 5px 15px;
 	background-color: $button-color;
 	color: black;
+	margin: 15px 0; 
 	&:hover {
+		background-color: $button-hover-color;
+	}
+	&:focus {
 		background-color: $button-hover-color;
 	}
 }
