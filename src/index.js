@@ -6,7 +6,6 @@ const initialize = (boardSize, name1, name2, againstAI = true) => {
 	const g1 = Gameboard(boardSize);
 	const g2 = Gameboard(boardSize);
 	const shipLengths = [5, 4, 3, 3, 2];
-	g1.placeRandomly(shipLengths);
 	g2.placeRandomly(shipLengths);
 	const p1 = Player(name1, g1, g2, false);
 	const p2 = Player(name2, g2, g1, againstAI);
@@ -26,7 +25,7 @@ const initialize = (boardSize, name1, name2, againstAI = true) => {
 			UI.displayEndMessage("Yay! You won!");
 		}
 	};
-	UI.initializeBoards(boardSize);
+	UI.initializeBoards(boardSize, shipLengths);
 	UI.reset = () => initialize(boardSize, name1, name2, againstAI);
 	return { p1, p2, UI };
 };

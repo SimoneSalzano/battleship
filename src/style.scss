@@ -21,7 +21,8 @@ html {
 	body {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
+		gap: 30px;
+		align-items: center;
 		min-height: 94vh;
 		width: 90vw;
 		padding: 2vh 4vw;
@@ -29,11 +30,16 @@ html {
 			text-align: center;
 			margin: min(10px, 2vh);
 		}
+		#tips {
+			text-align: center;
+			font-size: large;
+		}
 		#boards {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			gap: clamp(20px, 8vw, 100px);
+			margin: auto 0;
 			$board-width: min(min(600px, 65vw), 65vh);
 			$board-height: $board-width;
 			.board {
@@ -45,6 +51,19 @@ html {
 					);
 				border: 1px solid $board-border-color;
 				background-color: $board-color;
+			&#board-2 {
+				&.invalid {
+					.cell{
+						cursor: not-allowed;
+					}
+				}
+				.cell {
+					cursor: pointer;
+					&:hover:not(.ship) {
+						background-color: $board-hover-color;
+					}
+				}
+			}
 			}
 			.cell {
 				border: 2px solid $board-border-color;
@@ -52,9 +71,6 @@ html {
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				&:hover:not(.ship) {
-					background-color: $board-hover-color;
-				}
 				&.ship1 {
 					background-color: $ship1-color;
 				}
@@ -97,7 +113,7 @@ html {
 		}
 		footer {
 			text-align: center;
-			margin-top: 20px;
+			margin-top: auto;
 			a {
 				color: moccasin;
 			}
@@ -105,15 +121,20 @@ html {
 	}
 }
 
-#reset {
+button {
 	border: 1px solid $board-border-color;
 	border-radius: 10px;
 	font-size: large;
 	cursor: pointer;
+	align-self: center;
 	padding: 5px 15px;
 	background-color: $button-color;
 	color: black;
+	margin: 15px 0; 
 	&:hover {
+		background-color: $button-hover-color;
+	}
+	&:focus {
 		background-color: $button-hover-color;
 	}
 }
